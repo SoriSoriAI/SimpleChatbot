@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Create Assistant</title>
+        <!-- Bootstrap CSS -->
+        <link
+            href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+            rel="stylesheet"
+        />
+    </head>
+    <body>
+        <div class="container mt-5">
+            <h1 class="mb-4">Create Assistant</h1>
+            <form
+                id="assistantForm"
+                enctype="multipart/form-data"
+                method="POST"
+                action="/assistants/create"
+            >
+                <div class="form-group">
+                    <label for="assistant_name">Assistant Name:</label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="assistant_name"
+                        name="assistant_name"
+                        required
+                    />
+                </div>
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <textarea
+                        class="form-control"
+                        id="description"
+                        name="description"
+                        rows="5"
+                        required
+                    ></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="files">Upload Files (only .txt files):</label>
+                    <input
+                        type="file"
+                        class="form-control-file"
+                        id="files"
+                        name="files"
+                        multiple
+                        accept=".txt"
+                    />
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    Create Assistant
+                </button>
+            </form>
+        </div>
+
+        <!-- Bootstrap JS, Popper.js, and jQuery -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+        <script>
+            document.getElementById("assistantForm").onsubmit = async (e) => {
+                e.preventDefault();
+
+                const formData = new FormData(
+                    document.getElementById("assistantForm")
+                );
+                try {
+                    const response = await fetch(
+                        "http://localhost:3000/assistants/create",
+                        {
+                            method: "POST",
+                            body: formData,
+                        }
+                    );
+
+                    const result = await response.json();
+                    if (response.ok) {
+                        alert("Assistant created successfully!");
+                        console.log(result);
+                    } else {
+                        alert("Error: " + result.error);
+                        console.error(result);
+                    }
+                } catch (error) {
+                    alert("An unexpected error occurred.");
+                    console.error(error);
+                }
+            };
+        </script>
+    </body>
+</html>

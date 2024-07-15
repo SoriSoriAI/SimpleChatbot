@@ -1,7 +1,7 @@
 // routes/chat.js
 import { Router } from "express";
 const router = Router();
-import { openai, assistant, thread, vectorStore } from "../assistant.js";
+import { openai, thread, vectorStore } from "../openai.js";
 import multer from "multer";
 import fs from "fs";
 
